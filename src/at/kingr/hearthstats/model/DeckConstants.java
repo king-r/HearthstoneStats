@@ -1,7 +1,5 @@
 package at.kingr.hearthstats.model;
 
-import java.util.List;
-
 /**
  * Created by roli on 10.03.17.
  */

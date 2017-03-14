@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -16,6 +17,7 @@
       <ColumnConstraints />
   </columnConstraints>
   <rowConstraints>
+      <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -36,7 +38,7 @@
          </children>
       </GridPane>
       <ComboBox fx:id="userDecksComboBox" maxWidth="1.7976931348623157E308" onAction="#selectUserDeck" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <ScrollPane maxWidth="1.7976931348623157E308" GridPane.columnSpan="4" GridPane.rowIndex="2">
+      <ScrollPane hbarPolicy="NEVER" maxWidth="1.7976931348623157E308" vbarPolicy="ALWAYS" GridPane.columnSpan="4" GridPane.rowIndex="3">
         <content>
           <AnchorPane maxWidth="1.7976931348623157E308" minHeight="0.0" prefHeight="30.0" prefWidth="1196.0">
                <children>
@@ -51,7 +53,6 @@
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="40.0" prefHeight="40.0" />
-                        <RowConstraints minHeight="40.0" prefHeight="40.0" />
                     </rowConstraints>
                      <children>
                         <Label fx:id="header_0" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Meta Deck Name" />
@@ -65,11 +66,14 @@
             </AnchorPane>
         </content>
       </ScrollPane>
-      <TextField fx:id="newMetaDeckName" GridPane.rowIndex="3" />
-      <Button id="addNewMetaDeck" fx:id="addNewMetaDeck" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addNewMetaDeck" text="Add New Meta Deck" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-      <ComboBox fx:id="metaDeckClassComboBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextField fx:id="newMetaDeckName" GridPane.rowIndex="4" />
+      <Button id="addNewMetaDeck" fx:id="addNewMetaDeck" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addNewMetaDeck" text="Add New Meta Deck" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <ComboBox fx:id="metaDeckClassComboBox" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <TextField fx:id="newUserDeckName" GridPane.columnIndex="1" />
       <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Add your decks:" />
       <Button fx:id="deleteCurrentUserDeck" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteCurrentUserDeck" text="Delete this DeckStats" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Your Decklist:" GridPane.rowIndex="1" />
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Overall Deck Stats:" GridPane.rowIndex="2" />
+      <Label fx:id="overallWinRate" alignment="CENTER" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
    </children>
 </GridPane>

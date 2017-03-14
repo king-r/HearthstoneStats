@@ -52,4 +52,15 @@ public class UserDeck extends Deck {
         defeatsMap.put(deckname, 0);
     }
 
+    public double computeOverallWinRate() {
+        try {
+            int allWins = winMap.values().stream().mapToInt(i -> i.intValue()).sum();
+            int allDefeats = defeatsMap.values().stream().mapToInt(i -> i.intValue()).sum();
+            double winrate = Double.valueOf(allWins) / Double.valueOf(allWins + allDefeats);
+            return Double.isNaN(winrate) ? 0.0 : winrate;
+        } catch (ArithmeticException e) {
+            return 0.0;
+        }
+    }
+
 }

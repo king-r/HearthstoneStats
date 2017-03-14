@@ -1,1 +1,34 @@
-{"userdecks":{},"metadecks":{"123123":{"name":"123123","class":"WARRIOR"}},"metadecknames":["123123"]}
+{
+  "userdecks": {
+    "Jade Druid": {
+      "winrates": {
+        "1323": {
+          "wins": 0,
+          "defeats": 0
+        },
+        "weqwe": {
+          "wins": 0,
+          "defeats": 0
+        }
+      },
+      "name": "Jade Druid",
+      "class": "DRUID"
+    }
+  },
+  "metadecks": {
+    "1323": {
+      "name": "1323",
+      "class": "DRUID"
+    },
+    "weqwe": {
+      "name": "weqwe",
+      "class": "DRUID"
+    }
+  },
+  "metadecknames": [
+    "1323"
+  ],
+  "userdecknames": [
+    "Jade Druid"
+  ]
+}

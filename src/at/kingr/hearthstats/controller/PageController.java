@@ -11,13 +11,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.HPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,10 @@ public class PageController {
     public ComboBox<String> metaDeckClassComboBox;
 
     @FXML
-    private Button deleteCurrentUserDeck;
+    public Button deleteCurrentUserDeck;
+
+    @FXML
+    public Label overallWinRate;
 
     private UserDeck displayedDeck;
 
@@ -73,21 +76,30 @@ public class PageController {
         }
         metaDeckClassComboBox.setItems(classes);
         newUserDeckClassComboBox.setItems(classes);
-        if(!classes.isEmpty()) {
+        if (!classes.isEmpty()) {
             metaDeckClassComboBox.getSelectionModel().select(0);
             newUserDeckClassComboBox.getSelectionModel().select(0);
         }
 
         updateUserDeckComboBox();
-        updateGrid();
+        updateFrame();
     }
 
-    public void updateGrid() {
+    public void updateFrame() {
         clearGrid();
-        if(displayedDeck != null) {
+        if (displayedDeck != null) {
             loadGridContent();
         } else {
             displayNoDeckSelected();
+        }
+        updateOverallWinRate();
+    }
+
+    public void updateOverallWinRate() {
+        if (displayedDeck != null) {
+            overallWinRate.setText("Winrate: " + String.format("%1$,.4f", displayedDeck.computeOverallWinRate()) + "%");
+        } else {
+            overallWinRate.setText("Winrate:");
         }
     }
 
@@ -130,7 +142,7 @@ public class PageController {
             @Override
             public void handle(ActionEvent event) {
                 displayedDeck.incWins(deck.getName());
-                updateGrid();
+                updateFrame();
             }
         });
         Button decWins = generateCustomGridButton("-");
@@ -138,7 +150,7 @@ public class PageController {
             @Override
             public void handle(ActionEvent event) {
                 displayedDeck.decWins(deck.getName());
-                updateGrid();
+                updateFrame();
             }
         });
         winsGrid.add(incWins, 1, 0);
@@ -154,7 +166,7 @@ public class PageController {
             @Override
             public void handle(ActionEvent event) {
                 displayedDeck.incDefeats(deck.getName());
-                updateGrid();
+                updateFrame();
             }
         });
         Button decDefeats = generateCustomGridButton("-");
@@ -162,7 +174,7 @@ public class PageController {
             @Override
             public void handle(ActionEvent event) {
                 displayedDeck.decDefeats(deck.getName());
-                updateGrid();
+                updateFrame();
             }
         });
         defeatsGrid.add(incDefeats, 1, 0);
@@ -173,10 +185,10 @@ public class PageController {
         double wins = displayedDeck.getWinMap().get(deck.getName());
         double defeats = displayedDeck.getDefeatsMap().get(deck.getName());
         double winRate = wins / (wins + defeats);
-        if(Double.isNaN(winRate)) {
+        if (Double.isNaN(winRate)) {
             winRate = 0.0;
         }
-        gridPane.add(generateCustomGridLabel(String.format("%1$,.4f", winRate)), 3, rowNumber);
+        gridPane.add(generateCustomGridLabel(String.format("%1$,.4f", winRate) + "%"), 3, rowNumber);
 
         // deck class
         gridPane.add(generateCustomGridLabel(deck.getDeckClass().toString()), 4, rowNumber);
@@ -187,10 +199,15 @@ public class PageController {
             @Override
             public void handle(ActionEvent event) {
                 DataPool.getInstance().removeMetaDeck(deck.getName());
-                updateGrid();
+                updateFrame();
             }
         });
         gridPane.add(deleteButton, 5, rowNumber);
+
+        if(gridPane.getRowConstraints().size() < rowNumber) {
+            gridPane.getRowConstraints().add(new RowConstraints());
+        }
+        gridPane.getRowConstraints().get(rowNumber - 1).setMinHeight(40);
     }
 
 
@@ -210,7 +227,7 @@ public class PageController {
 
     public void addNewMetaDeck(ActionEvent event) {
         DataService.addNewMetaDeck(newMetaDeckName.getText(), DeckConstants.DeckClass.valueOf(metaDeckClassComboBox.getValue()));
-        updateGrid();
+        updateFrame();
     }
 
     public void addNewUserDeck(ActionEvent event) {
@@ -225,17 +242,17 @@ public class PageController {
         if (userDeckName != null) {
             displayedDeck = (UserDeck) DataPool.getInstance().getUserDeck(userDeckName);
         }
-        updateGrid();
+        updateFrame();
     }
 
     public void deleteCurrentUserDeck(ActionEvent event) {
-        if(displayedDeck == null) {
+        if (displayedDeck == null) {
             return;
         }
         DataPool.getInstance().removeUserDeck(displayedDeck.getName());
         displayedDeck = null;
         updateUserDeckComboBox();
-        updateGrid();
+        updateFrame();
         DataStoreService.getInstance().storeData();
     }
 }
